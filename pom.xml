@@ -7,7 +7,7 @@
 
     <groupId>com.grainger.aem</groupId>
     <artifactId>grainger.aem</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.3</version>
     <packaging>pom</packaging>
 
     <name>Grainger AEM Project</name>
