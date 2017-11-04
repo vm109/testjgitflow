@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>grainger.aem</artifactId>
+        <groupId>com.grainger.aem</groupId>
+        <version>3.0.7-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>grainger.all</artifactId>
+    <packaging>content-package</packaging>
+    <name>Grainger AEM - All</name>
+    <description>Combined package for Grainger AEM project</description>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.day.jcr.vault</groupId>
+                <artifactId>content-package-maven-plugin</artifactId>
+                <extensions>true</extensions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>buildSinglePackage</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.day.jcr.vault</groupId>
+                        <artifactId>content-package-maven-plugin</artifactId>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <userId>${crx.username}</userId>
+                            <password>${crx.password}</password>
+                            <verbose>true</verbose>
+                            <failOnError>true</failOnError>
+                            <group>grainger/aem</group>
+                            <subPackages>
+                                <subPackage>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>grainger.ui.apps</artifactId>
+                                    <filter>true</filter>
+                                </subPackage>
+                                <subPackage>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>grainger.ui.content</artifactId>
+                                    <filter>true</filter>
+                                </subPackage>
+                            </subPackages>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>autoInstallSinglePackage</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.day.jcr.vault</groupId>
+                        <artifactId>content-package-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>install-package</id>
+                                <goals>
+                                    <goal>install</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <userId>${crx.username}</userId>
+                            <password>${crx.password}</password>
+                            <targetURL>${crx.scheme}://${crx.host}:${crx.port}/crx/packmgr/service.jsp</targetURL>
+                            <failOnError>true</failOnError>
+                            <failOnMissingEmbed>true</failOnMissingEmbed>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>autoInstallReplicatePackage</id>
+            <activation>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.2</version>
+                        <executions>
+                            <execution>
+                                <id>activate-package</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>curl</executable>
+                                    <arguments>
+                                        <argument>-u</argument>
+                                        <argument>${crx.username}:${crx.password}</argument>
+                                        <argument>-v</argument>
+                                        <argument>-X</argument>
+                                        <argument>POST</argument>
+                                        <argument>${crx.scheme}://${crx.host}:${crx.port}/crx/packmgr/service/.json/etc/packages/grainger/aem/${project.artifactId}-${project.parent.version}.zip?cmd=replicate</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>        
+    </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.grainger.aem</groupId>
+            <artifactId>grainger.ui.apps</artifactId>
+            <version>3.0.7-SNAPSHOT</version>
+            <type>content-package</type>
+        </dependency>
+        <dependency>
+            <groupId>com.grainger.aem</groupId>
+            <artifactId>grainger.ui.content</artifactId>
+            <version>3.0.7-SNAPSHOT</version>
+            <type>content-package</type>
+        </dependency>
+    </dependencies>
+
+</project>
