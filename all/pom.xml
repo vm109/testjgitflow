@@ -3,7 +3,7 @@
     <parent>
         <artifactId>grainger.aem</artifactId>
         <groupId>com.grainger.aem</groupId>
-        <version>4.0.3-SNAPSHOT</version>
+        <version>4.0.3</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -134,13 +134,13 @@
         <dependency>
             <groupId>com.grainger.aem</groupId>
             <artifactId>grainger.ui.apps</artifactId>
-            <version>4.0.3-SNAPSHOT</version>
+            <version>4.0.3</version>
             <type>content-package</type>
         </dependency>
         <dependency>
             <groupId>com.grainger.aem</groupId>
             <artifactId>grainger.ui.content</artifactId>
-            <version>4.0.3-SNAPSHOT</version>
+            <version>4.0.3</version>
             <type>content-package</type>
         </dependency>
     </dependencies>
