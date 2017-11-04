@@ -466,8 +466,9 @@
                         <allowSnapshots>true</allowSnapshots>
                         <noDeploy>true</noDeploy>
                         <flowInitContext>
-                            <masterBranchName>master</masterBranchName>
+                            <masterBranchName>candidate</masterBranchName>
                             <developBranchName>development</developBranchName>
+                            <releaseBranchPrefix>candidatecut/</releaseBranchPrefix>
                         </flowInitContext>
                     </configuration>
                 </plugin>
