@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.grainger.aem</groupId>
         <artifactId>grainger.aem</artifactId>
-        <version>3.0.7-SNAPSHOT</version>
+        <version>4.0.1-SNAPSHOT</version>
     </parent>
 
     <!-- ====================================================================== -->
